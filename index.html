@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Pelanggan Yanoshi Jastip</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff; /* Biru cerah (Untuk Judul dan Fokus) */
+            --secondary-color: #28a745; /* Hijau (Untuk Tombol Sukses) */
+            --background-color: #f8f9fa; /* Abu muda */
+            --card-background: #ffffff;
+            --question-color: #0056b3; /* Biru yang sedikit lebih gelap untuk penekanan */
+            --option-color: #495057; /* Abu gelap/netral untuk opsi jawaban */
+            --border-radius: 12px;
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-focus: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 0.95rem;
+            color: #6c757d;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        /* ------------------------------------------------ */
+        /* Perbedaan Bentuk Teks Diterapkan di Sini */
+        /* ------------------------------------------------ */
+        
+        .form-group label.question-title {
+            display: block;
+            font-weight: 700; /* Lebih tebal */
+            margin-bottom: 15px;
+            font-size: 1.05rem; /* Sedikit lebih besar */
+            color: var(--question-color); /* Warna yang lebih menonjol */
+        }
+        
+        .checkbox-item span, .radio-item span {
+            color: var(--option-color); /* Warna yang lebih lembut/netral untuk opsi */
+            font-weight: 400; /* Tidak terlalu tebal */
+        }
+        /* ------------------------------------------------ */
+
+        .checkbox-group, .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkbox-item, .radio-item {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .checkbox-item:hover, .radio-item:hover {
+            background-color: #f1f3f5;
+        }
+
+        .checkbox-item input[type="checkbox"], .radio-item input[type="radio"] {
+            margin-right: 12px;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ced4da;
+            border-radius: 50%;
+            display: grid;
+            place-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .radio-item input[type="radio"]::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--primary-color);
+        }
+
+        .radio-item input[type="radio"]:checked {
+            border-color: var(--primary-color);
+        }
+
+        .radio-item input[type="radio"]:checked::before {
+            transform: scale(1);
+        }
+        
+        /* Khusus Checkbox */
+        .checkbox-item input[type="checkbox"] {
+            border-radius: 4px; 
+        }
+        .checkbox-item input[type="checkbox"]:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .checkbox-item input[type="checkbox"]:checked::before {
+            content: "\2713"; 
+            font-size: 14px;
+            color: white;
+            transform: scale(1);
+        }
+
+
+        .text-input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            resize: vertical;
+        }
+
+        .text-input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-focus);
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .submit-button:hover {
+            background-color: #218838;
+        }
+
+        .submit-button:active {
+            transform: translateY(1px);
+        }
+
+        .loading-indicator {
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* Modal/Popup Style */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4); 
+            backdrop-filter: blur(2px);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto; 
+            padding: 30px;
+            border-radius: var(--border-radius);
+            width: 90%; 
+            max-width: 500px;
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            animation: fadeIn 0.3s;
+        }
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .modal-content h2 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .voucher-box {
+            background-color: #e9f7ef; 
+            border: 2px dashed var(--secondary-color);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        #voucherCode {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d9534f; 
+            display: block;
+            margin: 10px 0;
+            letter-spacing: 2px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+                margin-top: 10px;
+            }
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .submit-button {
+                font-size: 1rem;
+                padding: 12px;
+            }
+            #voucherCode {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>✨ Form Review Pelanggan Yanoshi Jastip</h1>
+        <p>Bantu kami jadi lebih baik lagi! Ulasanmu sangat berharga. Dapatkan Kode Voucher Diskon setelah mengisi form.</p>
+    </div>
+
+    <form id="reviewForm">
+        
+        <div class="form-group">
+            <label class="question-title" for="sumber">1. Dari mana Kamu tahu Yanoshi Jastip?</label>
+            <div class="radio-group" id="sumber">
+                <label class="radio-item"><input type="radio" name="sumber" value="Instagram" required> <span>Instagram</span></label>
+                <label class="radio-item"><input type="radio" name="sumber" value="TikTok" required> <span>TikTok</span></label>
+                <label class="radio-item"><input type="radio" name="sumber" value="Rekomendasi Teman" required> <span>Rekomendasi Teman</span></label>
+                <label class="radio-item"><input type="radio" name="sumber" value="Google Search" required> <span>Google Search</span></label>
+                <label class="radio-item">
+                    <input type="radio" name="sumber" value="Lainnya" required id="sumber_lainnya_radio"> <span>Lainnya (isi sendiri)</span>
+                    <input type="text" name="sumber_lainnya" class="text-input" placeholder="Sebutkan sumber lainnya" style="display: none; margin-left: 10px;">
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="question-title" for="kategori">2. Barang/Kategori apa yang Kamu titip?</label>
+            <div class="radio-group" id="kategori">
+                <label class="radio-item"><input type="radio" name="kategori" value="Makanan/Minuman" required> <span>Makanan/Minuman</span></label>
+                <label class="radio-item"><input type="radio" name="kategori" value="Kosmetik/Skincare" required> <span>Kosmetik/Skincare</span></label>
+                <label class="radio-item"><input type="radio" name="kategori" value="Fashion" required> <span>Fashion</span></label>
+                <label class="radio-item"><input type="radio" name="kategori" value="Mainan/Hobi" required> <span>Mainan/Hobi</span></label>
+                <label class="radio-item"><input type="radio" name="kategori" value="Barang Elektronik" required> <span>Barang Elektronik</span></label>
+                <label class="radio-item">
+                    <input type="radio" name="kategori" value="Lainnya" required id="kategori_lainnya_radio"> <span>Lainnya (isi sendiri)</span>
+                    <input type="text" name="kategori_lainnya" class="text-input" placeholder="Sebutkan kategori lainnya" style="display: none; margin-left: 10px;">
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="question-title" for="alasan">3. Kenapa Kamu milih ikutan Jastip di Yanoshi? *Pilih maksimal 3*</label>
+            <div class="checkbox-group" id="alasan">
+                <label class="checkbox-item"><input type="checkbox" name="alasan" value="Harga Murah"> <span>Harga Murah</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="alasan" value="Pengiriman Cepat"> <span>Pengiriman Cepat</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="alasan" value="Terpercaya"> <span>Terpercaya</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="alasan" value="Gampang dan Mudah"> <span>Gampang dan Mudah</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="alasan" value="Bisa Titip Produk Langka/Eksklusif"> <span>Bisa Titip Produk Langka/Eksklusif</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="alasan" value="Admin Ramah"> <span>Admin Ramah</span></label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="alasan_lainnya_check" value="Lainnya" id="alasan_lainnya_checkbox"> <span>Lainnya (isi sendiri)</span>
+                    <input type="text" name="alasan_lainnya" class="text-input" placeholder="Sebutkan alasan lainnya" style="display: none; margin-left: 10px;">
+                </label>
+            </div>
+            <input type="hidden" name="alasan_check_validator" required>
+        </div>
+
+        <div class="form-group">
+            <label class="question-title" for="suka">4. Apa yang paling Kamu suka dari pelayanan kami? (Opsional)</label>
+            <textarea id="suka" name="suka" rows="3" placeholder="Contoh: Respon cepat, packing aman, selalu update status barang..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="question-title" for="tingkatkan">5. Apa yang perlu kami tingkatkan/perbaiki untuk jadi lebih baik? (Opsional)</label>
+            <textarea id="tingkatkan" name="tingkatkan" rows="3" placeholder="Contoh: Tambah opsi pengiriman, harga bisa lebih bersaing, website lebih user-friendly..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-button" id="submitButton">Kirim Review dan Dapatkan Voucher! 🚀</button>
+        <div class="loading-indicator" id="loadingIndicator">Sedang Mengirim Data... Mohon Tunggu.</div>
+
+    </form>
+</div>
+
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <h2>🎉 Review Berhasil Dikirim!</h2>
+        <p><strong>Terimakasih banyak sudah meluangkan waktu untuk me-review Kami!</strong></p>
+        <div class="voucher-box">
+            <p>Berikut kode voucher **diskon 5%** untuk Kamu ikutan Jastip di batch berikutnya! Simpan kode ini dan jangan lupa kamu input saat pengisian form Jastip!</p>
+            <strong id="voucherCode"></strong>
+            <button onclick="copyVoucher()" class="submit-button" style="margin-top: 15px; background-color: var(--primary-color);">Salin Kode</button>
+        </div>
+        <p style="margin-top: 20px; font-size: 0.85rem; color: #6c757d;">Klik di luar kotak untuk menutup.</p>
+    </div>
+</div>
+
+<script>
+    // ⚠️ PENTING: GANTI DENGAN URL DEPLOYMENT APPS SCRIPT ANDA! 
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzGAYjBw6QWAQrtXyrTrCydt7dL_ASKB7oS1Dqs2BwQ26rPFlRETaulpqsqcZN7yknOWQ/exec'; 
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('reviewForm');
+        const submitButton = document.getElementById('submitButton');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const modal = document.getElementById('successModal');
+        const voucherCodeElement = document.getElementById('voucherCode');
+        
+        // Elemen Lainnya
+        const sumberLainnyaRadio = document.getElementById('sumber_lainnya_radio');
+        const sumberLainnyaInput = document.querySelector('input[name="sumber_lainnya"]');
+        const kategoriLainnyaRadio = document.getElementById('kategori_lainnya_radio');
+        const kategoriLainnyaInput = document.querySelector('input[name="kategori_lainnya"]');
+        
+        // Elemen Alasan
+        const alasanLainnyaCheckbox = document.getElementById('alasan_lainnya_checkbox');
+        const alasanLainnyaInput = document.querySelector('input[name="alasan_lainnya"]');
+        const alasanCheckValidator = document.querySelector('input[name="alasan_check_validator"]'); 
+        const alasanCheckboxes = document.querySelectorAll('input[name="alasan"], input[name="alasan_lainnya_check"]'); 
+
+        // --- Logic Tampilkan Input Lainnya (Radio Button) ---
+        function toggleInput(radio, input) {
+            if (radio.checked) {
+                input.style.display = 'block';
+                input.focus();
+            } else {
+                input.style.display = 'none';
+                input.value = '';
+            }
+        }
+
+        document.querySelectorAll('input[name="sumber"]').forEach(radio => {
+            radio.addEventListener('change', () => toggleInput(sumberLainnyaRadio, sumberLainnyaInput));
+        });
+
+        document.querySelectorAll('input[name="kategori"]').forEach(radio => {
+            radio.addEventListener('change', () => toggleInput(kategoriLainnyaRadio, kategoriLainnyaInput));
+        });
+
+        // --- Logic Tampilkan Input Lainnya (Checkbox Alasan) ---
+        alasanLainnyaCheckbox.addEventListener('change', () => {
+            if (alasanLainnyaCheckbox.checked) {
+                alasanLainnyaInput.style.display = 'block';
+                alasanLainnyaInput.focus();
+            } else {
+                alasanLainnyaInput.style.display = 'none';
+                alasanLainnyaInput.value = '';
+            }
+            validateAlasan(); 
+        });
+
+        // --- Logic Validasi Pilihan Maksimal dan Minimal 1 Alasan (No. 3) ---
+        function validateAlasan() {
+            let checkedCount = 0;
+            alasanCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checkedCount++;
+                }
+            });
+            
+            // Logika validasi minimal 1
+            if (checkedCount > 0) {
+                alasanCheckValidator.value = 'checked';
+                alasanCheckValidator.setCustomValidity(''); 
+            } else {
+                alasanCheckValidator.value = '';
+                alasanCheckValidator.setCustomValidity('Mohon pilih minimal satu alasan.'); 
+            }
+        }
+        
+        alasanCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                let currentCheckedCount = Array.from(alasanCheckboxes).filter(cb => cb.checked).length;
+
+                // Batasi maksimal 3 pilihan
+                if (currentCheckedCount > 3) {
+                    this.checked = false; 
+                    alert('Maksimal hanya boleh memilih 3 alasan!');
+                } else {
+                    validateAlasan();
+                }
+            });
+        });
+
+        validateAlasan(); 
+
+        // --- Logic Generate Kode Voucher ---
+        function generateVoucherCode() {
+            const length = 6;
+            const fixedChars = ['F', 'J', 'Y'];
+            const allChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            let remainingLength = length - fixedChars.length;
+            
+            code += fixedChars.join('');
+            
+            for (let i = 0; i < remainingLength; i++) {
+                const randomIndex = Math.floor(Math.random() * allChars.length);
+                code += allChars[randomIndex];
+            }
+            
+            code = code.split('').sort(() => 0.5 - Math.random()).join('');
+            
+            return code;
+        }
+
+        // --- Logic Submit Form ---
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let selectedAlasanElements = Array.from(alasanCheckboxes).filter(cb => cb.checked);
+
+            if (selectedAlasanElements.length === 0) {
+                 alert('Mohon pilih minimal satu alasan pada pertanyaan no. 3!');
+                 return;
+            }
+
+            const formData = new FormData(form);
+            const data = {};
+            
+            for (const [key, value] of formData.entries()) {
+                if (key === 'sumber' && value === 'Lainnya') {
+                    data[key] = formData.get('sumber_lainnya') || 'Lainnya (Tidak Diisi)';
+                } else if (key === 'kategori' && value === 'Lainnya') {
+                    data[key] = formData.get('kategori_lainnya') || 'Lainnya (Tidak Diisi)';
+                } else if (key.includes('_lainnya') || key === 'alasan_lainnya_check' || key === 'alasan_check_validator') {
+                    continue; 
+                } else if (key === 'alasan') {
+                    continue; 
+                } else {
+                    data[key] = value;
+                }
+            }
+
+            let selectedAlasan = selectedAlasanElements.map(cb => {
+                if (cb.id === 'alasan_lainnya_checkbox') {
+                    return alasanLainnyaInput.value || 'Lainnya (Tidak Diisi)';
+                }
+                return cb.value;
+            });
+            
+            data['alasan'] = selectedAlasan.join(' | ');
+
+            const voucherCode = generateVoucherCode();
+            data['kodeVoucher'] = voucherCode;
+            
+            submitButton.disabled = true;
+            submitButton.style.backgroundColor = '#6c757d'; 
+            submitButton.textContent = 'Mengirim...';
+            loadingIndicator.style.display = 'block';
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8', 
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Gagal mengirim data ke Google Apps Script.');
+                }
+                return response.text();
+            })
+            .then(responseText => {
+                console.log('Apps Script Response:', responseText);
+                
+                voucherCodeElement.textContent = voucherCode;
+                modal.style.display = 'block';
+
+                form.reset();
+                sumberLainnyaInput.style.display = 'none';
+                kategoriLainnyaInput.style.display = 'none';
+                alasanLainnyaInput.style.display = 'none';
+                validateAlasan(); 
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat mengirim review. Mohon coba lagi! Detail Error: ' + error.message);
+            })
+            .finally(() => {
+                submitButton.disabled = false;
+                submitButton.style.backgroundColor = '#28a745'; 
+                submitButton.textContent = 'Kirim Review dan Dapatkan Voucher! 🚀';
+                loadingIndicator.style.display = 'none';
+            });
+        });
+
+        // --- Logic Tutup Modal ---
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    });
+
+    // Fungsi Salin Kode Voucher
+    function copyVoucher() {
+        const code = document.getElementById('voucherCode').textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            alert('Kode voucher berhasil disalin: ' + code);
+        }).catch(err => {
+            console.error('Gagal menyalin: ', err);
+            prompt("Gagal menyalin otomatis. Silakan salin kode berikut:", code);
+        });
+    }
+</script>
+
+</body>
+</html>
